@@ -2,11 +2,8 @@ from flask import Blueprint, request, jsonify
 from services.gemini_service import analyze_image_prompt
 from PIL import Image
 import io
-import os
 
 analyze_bp = Blueprint("analyze", __name__)
-
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 @analyze_bp.route("/analyze", methods=["POST"])
 def analyze():
@@ -18,31 +15,30 @@ def analyze():
 
         # OPTION 2: image path (generated image)
         else:
-            image_path = request.json.get("image_path")
+            data = request.get_json()
+            image_path = data.get("image_path") if data else None
+
             if not image_path:
                 return jsonify({"error": "No image provided"}), 400
 
             image = Image.open(image_path)
 
         prompt = """
-            Analyze this image and provide:
+        Analyze this image and provide:
 
-            1. Short summary
-            2. Objects detected
-            3. Image quality (clear, blurry, lighting, etc.)
-            4. Scene description
-            5. A short creative story
-            6. Photographer-style critique
+        1. Short summary
+        2. Objects detected
+        3. Image quality (clear, blurry, lighting, etc.)
+        4. Scene description
+        5. A short creative story
+        6. Photographer-style critique
 
-            Keep it structured and clean.
-            """
+        Keep it structured and clean.
+        """
 
-        response = client.models.generate_content(
-            model="gemini-flash-latest",
-            contents=[prompt, image]
-        )
+        result = analyze_image_prompt(prompt, image)
 
-        return jsonify({"analysis": response.text})
+        return jsonify({"success": True, "analysis": result})
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"success": False, "error": str(e)}), 500
