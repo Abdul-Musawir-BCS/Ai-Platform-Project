@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Studio X</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="bg"></div>
+
+<!-- NAV -->
+<div class="nav">
+    <div class="logo">AI Studio X</div>
+
+    <div class="nav-links">
+        <button onclick="switchTab(event,'generate')" class="active">Generate</button>
+        <button onclick="switchTab(event,'analyze')">Analyze</button>
+        <button onclick="switchTab(event,'compare')">Compare</button>
+        <button onclick="switchTab(event,'history')">History</button>
+        <button onclick="switchTab(event,'dashboard')">Dashboard</button>
+    </div>
+
+    <div>
+        <button onclick="setMode('live')" id="liveBtn" class="mode active">Live</button>
+        <button onclick="setMode('demo')" id="demoBtn" class="mode">Demo</button>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- GENERATE -->
+    <div id="generate" class="tab active">
+        <div class="card">
+            <h2>Create Image</h2>
+
+            <input id="prompt" placeholder="Type your idea...">
+            <button class="gold" onclick="generate()">Generate</button>
+
+            <div class="flex">
+                <img id="outputImage">
+
+                <div>
+                    <h4>Edit</h4>
+                    <input id="editPrompt" placeholder="Refine image...">
+                    <button onclick="editImage()">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANALYZE -->
+    <div id="analyze" class="tab">
+        <div class="card">
+            <h2>Analyze Image</h2>
+
+            <img id="analyzePreview">
+
+            <button onclick="analyze()">Analyze Latest</button>
+
+            <input type="file" id="uploadInput">
+            <button onclick="uploadAndAnalyze()">Upload & Analyze</button>
+
+            <pre id="analysis"></pre>
+        </div>
+    </div>
+
+    <!-- COMPARE -->
+    <div id="compare" class="tab">
+        <div class="card">
+            <h2>Compare Images</h2>
+
+            <div id="compareGrid"></div>
+
+            <button onclick="compareSelected()">Compare Selected</button>
+
+            <pre id="compareResult"></pre>
+        </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="history" class="tab">
+        <div class="card">
+            <h2>Your Images</h2>
+
+            <button onclick="loadHistory()">Load History</button>
+
+            <div id="historyGrid"></div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="tab">
+        <div class="card">
+            <h2>Activity Timeline</h2>
+            <div id="timeline"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- LOADER -->
+<div id="loader" class="loader hidden">
+    <div class="spinner"></div>
+    <p id="loaderText"></p>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
