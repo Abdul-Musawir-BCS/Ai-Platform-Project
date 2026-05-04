@@ -47,25 +47,11 @@ def chat_response(message):
 
 
 # 🔍 Image Analysis (TEXT-BASED)
-def analyze_image_text(image_path):
+def analyze_image_prompt(prompt, image):
     try:
-        prompt = f"""
-        Analyze this image: {image_path}
-
-        Provide:
-        - Short summary
-        - Objects detected
-        - Image quality (clear, blurry, etc.)
-        - A short creative story
-        - A professional photographer's critique
-
-        Keep it structured and clean.
-        """
-
         response = model.generate_content(
-            contents=prompt
+            [prompt, image]
         )
-
         return response.text.strip()
 
     except Exception as e:

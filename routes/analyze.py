@@ -25,16 +25,17 @@ def analyze():
             image = Image.open(image_path)
 
         prompt = """
-        Analyze this image in structured format:
+            Analyze this image and provide:
 
-        1. Caption
-        2. Summary
-        3. Key objects detected
-        4. Mood
-        5. Scene type
-        6. Image quality (sharp/blurry/etc)
-        7. Creative short story
-        """
+            1. Short summary
+            2. Objects detected
+            3. Image quality (clear, blurry, lighting, etc.)
+            4. Scene description
+            5. A short creative story
+            6. Photographer-style critique
+
+            Keep it structured and clean.
+            """
 
         response = client.models.generate_content(
             model="gemini-flash-latest",
