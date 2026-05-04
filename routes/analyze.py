@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from google import genai
+from services.gemini_service import analyze_image_prompt
 from PIL import Image
 import io
 import os
