@@ -1,8 +1,10 @@
-from google import genai
+import google.generativeai as genai
 from config import Config
 
 # Initialize Gemini client
-client = genai.Client(api_key=Config.GEMINI_API_KEY)
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+model = genai.GenerativeModel("gemini-flash-latest")
+
 
 
 # 🎨 Enhance Prompt
@@ -20,8 +22,7 @@ def enhance_prompt(prompt, mood):
         Return ONLY the improved prompt.
         """
 
-        response = client.models.generate_content(
-            model="gemini-flash-latest",
+        response = model.generate_content(
             contents=full_prompt
         )
 
@@ -34,8 +35,7 @@ def enhance_prompt(prompt, mood):
 # 💬 Chatbot / General AI
 def chat_response(message):
     try:
-        response = client.models.generate_content(
-            model="gemini-flash-latest",
+        response = model.generate_content(  
             contents=message
         )
 
@@ -61,8 +61,7 @@ def analyze_image_text(image_path):
         Keep it structured and clean.
         """
 
-        response = client.models.generate_content(
-            model="gemini-flash-latest",
+        response = model.generate_content(
             contents=prompt
         )
 
@@ -86,8 +85,7 @@ def suggest_improvements(prompt):
         3. Realistic version
         """
 
-        response = client.models.generate_content(
-            model="gemini-flash-latest",
+        response = model.generate_content(
             contents=suggestion_prompt
         )
 
@@ -112,8 +110,7 @@ def compare_images_text(img1, img2):
         - Which is better and why
         """
 
-        response = client.models.generate_content(
-            model="gemini-flash-latest",
+        response = model.generate_content(
             contents=prompt
         )
 
